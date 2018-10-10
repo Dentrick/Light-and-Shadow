@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShadowState : MonoBehaviour {
 
-    public List<GameObject> ShadowList;
+    public List<GameObject> ShadowList; //list of shadows under this block
+    public PlayerControl pControl; //player control (for referencing)
 
     public ActiveShadow activeShadow;
     public enum ActiveShadow
@@ -22,11 +23,21 @@ public class ShadowState : MonoBehaviour {
 	// Update state of shadows based on keys pressed
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
             activeShadow = ActiveShadow.left;
+            IsOnFloorCheck();
+        }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             activeShadow = ActiveShadow.center;
+            IsOnFloorCheck();
+        }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
             activeShadow = ActiveShadow.right;
+            IsOnFloorCheck();
+        }
+            
         ValidateInput();
     }
 
@@ -40,5 +51,15 @@ public class ShadowState : MonoBehaviour {
             else
                 i.SetActive(false);
         }
+    }
+
+    //controlled try catch of pControl
+    void IsOnFloorCheck()
+    {
+        try
+        {
+            pControl.isOnFloor = false;
+        }
+        catch { }
     }
 }

@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour {
     public float movespeed = 1.1f; //movement speed of player 
 
     [SerializeField] float velocity = 0; //current velocity
-    [SerializeField] bool isOnFloor = true; //bool for floor collision
+    public bool isOnFloor = true; //bool for floor collision (public for referencing)
 
     // Use this for initialization
     void Start()
@@ -26,6 +26,7 @@ public class PlayerControl : MonoBehaviour {
 	void Update ()
     {
         Jump();
+        MoveJolt();
         ApplyHorzMove();
         ApplyVertMove();
 	}
@@ -59,6 +60,13 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
+    //jerk player to notch buggy physics when first moving
+    void MoveJolt()
+    {
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+            Jump(.001f);
+    }
+
     //basic jump method
     void Jump()
     {
@@ -66,8 +74,16 @@ public class PlayerControl : MonoBehaviour {
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isOnFloor) 
         {
             velocity = 0;
-            ApplyForce(jumpForce); //10 units/second^2 upwards
+            ApplyForce(jumpForce); //units/second^2 upwards
+            isOnFloor = false;
         }
+    }
+
+    //custom jump method
+    void Jump(float force)
+    {
+        ApplyForce(force); //units/second^2 upwards
+        isOnFloor = false;
     }
 
     //apply a force (all forces are vertical)
@@ -79,14 +95,14 @@ public class PlayerControl : MonoBehaviour {
     //collision check method
     private void OnCollisionStay2D(Collision2D col)
     {
-        if (col.gameObject.name == "Floor" || col.gameObject.name == "Block" || col.gameObject.name.Contains("shadow"))
+        if (col.gameObject.name == "Floor" || col.gameObject.name.Contains("Block") || col.gameObject.name.Contains("shadow"))
             isOnFloor = true;
     }
 
     //collision uncheck method
     private void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.name == "Floor" || col.gameObject.name == "Block" || col.gameObject.name.Contains("shadow"))
+        if (col.gameObject.name == "Floor" || col.gameObject.name.Contains("Block") || col.gameObject.name.Contains("shadow"))
             isOnFloor = false;
     }
 }
