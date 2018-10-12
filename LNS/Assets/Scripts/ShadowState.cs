@@ -22,17 +22,17 @@ public class ShadowState : MonoBehaviour {
 	
 	// Update state of shadows based on keys pressed
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             activeShadow = ActiveShadow.left;
             IsOnFloorCheck();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
             activeShadow = ActiveShadow.center;
             IsOnFloorCheck();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
         {
             activeShadow = ActiveShadow.right;
             IsOnFloorCheck();
