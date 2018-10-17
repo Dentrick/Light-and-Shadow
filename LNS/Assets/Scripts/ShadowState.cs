@@ -46,7 +46,7 @@ public class ShadowState : MonoBehaviour {
     {
         foreach(GameObject i in ShadowList)
         {
-            if (i.name == ("shadow" + (int)activeShadow))
+            if (i.name == ("shadow" + (int)activeShadow) || i.name == ("laser" + (int)activeShadow))
                 i.SetActive(true);
             else
                 i.SetActive(false);
