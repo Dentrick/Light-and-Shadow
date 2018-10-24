@@ -58,7 +58,7 @@ public class ShadowState : MonoBehaviour {
     {
         try
         {
-            pControl.isOnFloor = false;
+            pControl.onFloor = false;
         }
         catch { }
     }

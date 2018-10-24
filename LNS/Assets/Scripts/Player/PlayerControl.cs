@@ -8,12 +8,17 @@ public class PlayerControl : MonoBehaviour {
     public SpriteRenderer sprite; //own sprite
 
     public float grav = -.1f; //gravity in units/second^2
-    public float mass = 1; //multiplier to forces
+    public float mass = 1; //regular multiplier to forces
+    public float grabMass = .1f; //walljump multiplier to forces
+    public float currMass = 1; //current multiplier to forces
     public float jumpForce = 4f; //jump accel due to force in units/second^2 (MUST BE LARGER ABS VAL THAN grav)
     public float movespeed = 1.1f; //movement speed of player 
 
-    [SerializeField] float velocity = 0; //current velocity
-    public bool isOnFloor = true; //bool for floor collision (public for referencing)
+    public float velocity = 0; //current velocity
+    public bool onFloor = true; //bool for floor collision (public for referencing)
+    public bool wallJumpReset = false; //allow walljump only once, resetting on trigger exit
+    public bool isDead = false; //check if dead
+    public int BallsCollected = 0; //# of balls collected
 
     // Use this for initialization
     void Start()
@@ -26,7 +31,6 @@ public class PlayerControl : MonoBehaviour {
 	void Update ()
     {
         Jump();
-        MoveJolt();
         ApplyHorzMove();
         ApplyVertMove();
 	}
@@ -38,7 +42,7 @@ public class PlayerControl : MonoBehaviour {
         ApplyForce(grav);
         if (velocity > 0)
             transform.Translate(new Vector3(0, velocity), Space.World); //translate up according to velocity
-        else if (!isOnFloor)
+        else if (!onFloor)
             transform.Translate(new Vector3(0, velocity), Space.World); //translate up or down according to velocity
         else
             velocity = 0;
@@ -60,30 +64,23 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
-    //jerk player to notch buggy physics when first moving
-    void MoveJolt()
-    {
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-            Jump(.001f);
-    }
-
-    //basic jump method
+    //jump method
     void Jump()
     {
         //if jump press and touching ground
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isOnFloor) 
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))) 
         {
-            velocity = 0;
-            ApplyForce(jumpForce); //units/second^2 upwards
-            isOnFloor = false;
+            if (onFloor)
+            {
+                ApplyForce(jumpForce); //units/second^2 upwards
+            }
+            else if (wallJumpReset)
+            {
+                velocity = 0;
+                ApplyForce(jumpForce); //units/second^2 upwards
+                wallJumpReset = false;
+            }
         }
-    }
-
-    //custom jump method
-    void Jump(float force)
-    {
-        ApplyForce(force); //units/second^2 upwards
-        isOnFloor = false;
     }
 
     //apply a force (all forces are vertical)
@@ -92,17 +89,14 @@ public class PlayerControl : MonoBehaviour {
         velocity += (mass * force * Time.deltaTime);
     }
 
-    //collision check method
-    private void OnCollisionStay2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.name == "Floor" || col.gameObject.name.Contains("Block") || col.gameObject.name.Contains("shadow"))
-            isOnFloor = true;
-    }
-
-    //collision uncheck method
-    private void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.name == "Floor" || col.gameObject.name.Contains("Block") || col.gameObject.name.Contains("shadow"))
-            isOnFloor = false;
+        if (col.gameObject.name.Contains("spike") ^ col.gameObject.name.Contains("laser"))
+            isDead = true;
+        else if (col.gameObject.name.Contains("Finish"))
+        {
+            BallsCollected++;
+            Destroy(col.gameObject);
+        }
     }
 }
