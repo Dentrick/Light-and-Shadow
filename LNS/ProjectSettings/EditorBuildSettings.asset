@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/fLevel3.unity
     guid: 57e9052306525d34291473578d96b8c8
   - enabled: 1
+    path: Assets/Scenes/TestLevel2.unity
+    guid: 4ba24a8741594a442bce154045f841f3
+  - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: 2d2e8da06d7c7d749ac7eca60542b90c
   m_configObjects: {}
