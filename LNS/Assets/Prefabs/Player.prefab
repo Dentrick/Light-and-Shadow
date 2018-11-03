@@ -179,7 +179,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.3}
+  m_Offset: {x: 0, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -190,7 +190,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.25}
+  m_Size: {x: 0.95, y: 0.25}
   m_EdgeRadius: 0
 --- !u!61 &61804742014889018
 BoxCollider2D:
@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PControl: {fileID: 114803415683602006}
+  coyoteTime: 0.1
 --- !u!114 &114151685408982406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PControl: {fileID: 114803415683602006}
+  coyoteTime: 0.1
 --- !u!114 &114803415683602006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,7 +271,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   self: {fileID: 50937510522377698}
   sprite: {fileID: 212162282999024952}
-  grav: -0.1
+  normalSprite: {fileID: 21300000, guid: 7f323cad44f07ed4292500bbde3267f7, type: 3}
+  jumpSprite: {fileID: 21300000, guid: 6cdf08031dda4454e954cffde1889b2b, type: 3}
+  grav: -0.135
   mass: 1
   grabMass: 0.1
   currMass: 1
@@ -315,7 +319,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 7f323cad44f07ed4292500bbde3267f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cdf08031dda4454e954cffde1889b2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

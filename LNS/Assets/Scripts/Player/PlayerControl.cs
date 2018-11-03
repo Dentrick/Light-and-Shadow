@@ -7,7 +7,10 @@ public class PlayerControl : MonoBehaviour {
     public Rigidbody2D self; //own rigidbody
     public SpriteRenderer sprite; //own sprite
 
-    public float grav = -.1f; //gravity in units/second^2
+    public Sprite normalSprite; //normal sprite
+    public Sprite jumpSprite; //jumping sprite
+
+    public float grav = -.135f; //gravity in units/second^2
     public float mass = 1; //regular multiplier to forces
     public float grabMass = .1f; //walljump multiplier to forces
     public float currMass = 1; //current multiplier to forces
@@ -31,6 +34,7 @@ public class PlayerControl : MonoBehaviour {
 	void Update ()
     {
         Jump();
+        JumpSwapSprite();
         ApplyHorzMove();
         ApplyVertMove();
 	}
@@ -73,6 +77,8 @@ public class PlayerControl : MonoBehaviour {
             if (onFloor)
             {
                 ApplyForce(jumpForce); //units/second^2 upwards
+                onFloor = false;
+                wallJumpReset = true; //double jump
             }
             else if (wallJumpReset)
             {
@@ -80,6 +86,19 @@ public class PlayerControl : MonoBehaviour {
                 ApplyForce(jumpForce); //units/second^2 upwards
                 wallJumpReset = false;
             }
+        }
+    }
+
+    //sprite swap on jump
+    void JumpSwapSprite()
+    {
+        if (onFloor)
+        {
+            sprite.sprite = normalSprite;
+        }
+        else
+        {
+            sprite.sprite = jumpSprite;
         }
     }
 
@@ -96,6 +115,7 @@ public class PlayerControl : MonoBehaviour {
         else if (col.gameObject.name.Contains("Finish"))
         {
             BallsCollected++;
+            onFloor = false; //wonky physics on win sometimes
             Destroy(col.gameObject);
         }
     }

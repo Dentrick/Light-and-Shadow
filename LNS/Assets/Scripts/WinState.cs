@@ -10,6 +10,7 @@ public class WinState : MonoBehaviour {
     public GameObject instructions;
     public GameObject winText;
     public GameObject loseText;
+    public GameObject winTextFinal;
 
     public GameState gameState = GameState.playing;
     public enum GameState
@@ -45,7 +46,8 @@ public class WinState : MonoBehaviour {
         //win state
         else if (gameState == GameState.win)
         {
-            try
+            //if it's not the last level, load next level
+            if (SceneManager.GetActiveScene().buildIndex + 1 != SceneManager.sceneCountInBuildSettings)
             {
                 //if press r, continue
                 if (Input.GetKey(KeyCode.R))
@@ -53,7 +55,7 @@ public class WinState : MonoBehaviour {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 }
             }
-            catch //will cause exception when reached max level, so restart game
+            else //else, restart game
             {
                 SceneManager.LoadScene(0);
             }
@@ -68,7 +70,7 @@ public class WinState : MonoBehaviour {
             }
             catch { }
 
-            //if press r, restart
+            //if press r, restart level
             if (Input.GetKey(KeyCode.R))
             {
                 //SceneManager.LoadScene(0);
@@ -84,13 +86,23 @@ public class WinState : MonoBehaviour {
         {
             instructions.SetActive(true);
             winText.SetActive(false);
+            winTextFinal.SetActive(false);
             loseText.SetActive(false);
         }
         //win state
         else if (gameState == GameState.win)
         {
-            instructions.SetActive(false);
-            winText.SetActive(true);
+            //if it's not the last level, load normal winText
+            if (SceneManager.GetActiveScene().buildIndex + 1 != SceneManager.sceneCountInBuildSettings)
+            {
+                instructions.SetActive(false);
+                winText.SetActive(true);
+            }
+            else //else load the final win text
+            {
+                instructions.SetActive(false);
+                winTextFinal.SetActive(true);
+            }
         }
         //lose state
         else if (gameState == GameState.lose)

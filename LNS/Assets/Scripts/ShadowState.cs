@@ -62,4 +62,7 @@ public class ShadowState : MonoBehaviour {
         }
         catch { }
     }
+
+    //disable player's collider when walljumping
+    
 }
