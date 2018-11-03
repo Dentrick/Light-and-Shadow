@@ -1157,6 +1157,11 @@ Prefab:
       propertyPath: finish.Array.data[1]
       value: 
       objectReference: {fileID: 1489424283}
+    - target: {fileID: 212766912088031486, guid: 3d7eda73746ab534d84d580336ecf115,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d7eda73746ab534d84d580336ecf115, type: 2}
   m_IsPrefabAsset: 0

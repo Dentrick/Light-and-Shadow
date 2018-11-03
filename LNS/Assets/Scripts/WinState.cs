@@ -46,20 +46,15 @@ public class WinState : MonoBehaviour {
         //win state
         else if (gameState == GameState.win)
         {
-            //if it's not the last level, load next level
-            if (SceneManager.GetActiveScene().buildIndex + 1 != SceneManager.sceneCountInBuildSettings)
+            //if press r, continue
+            if (Input.GetKey(KeyCode.R))
             {
-                //if press r, continue
-                if (Input.GetKey(KeyCode.R))
-                {
+                //if it's not the last level, load next level
+                if (SceneManager.GetActiveScene().buildIndex + 1 != SceneManager.sceneCountInBuildSettings)
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-                }
+                else //else, restart game
+                    SceneManager.LoadScene(0);
             }
-            else //else, restart game
-            {
-                SceneManager.LoadScene(0);
-            }
-            
         }
         //lose state
         else if (gameState == GameState.lose)

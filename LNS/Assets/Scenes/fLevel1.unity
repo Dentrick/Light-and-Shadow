@@ -862,6 +862,15 @@ Prefab:
       propertyPath: finish.Array.data[0]
       value: 
       objectReference: {fileID: 470992522}
+    - target: {fileID: 212766912088031486, guid: 3d7eda73746ab534d84d580336ecf115,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866079609683944, guid: 3d7eda73746ab534d84d580336ecf115, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -605.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d7eda73746ab534d84d580336ecf115, type: 2}
   m_IsPrefabAsset: 0
